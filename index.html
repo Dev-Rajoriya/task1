@@ -1,0 +1,47 @@
+<!Doctype html>
+<html>
+    <head>
+        <title>
+            task
+        </title>
+        <style>
+             .cta-button {
+                width:300px;
+                border: 3px solid black;
+                border-radius: 0.5rem;
+                font-size: 1rem;
+                flex: 0 1 auto;
+                background-color: white;
+                cursor: pointer;
+            }
+            .green{
+        background-color: hsl(138, 100%, 62%);
+            }
+            .container{
+                display: grid;
+                grid-template-columns:1fr 300px 1fr 1fr;
+                grid-template-rows:repeat(30,30px);
+                column-gap:3px;
+            }
+            .article{
+                grid-column-start:3;
+                grid-column-end:4;
+                grid-row-start:1;
+                grid-row-end:5
+            }
+            .item {
+               grid-column-start:2;
+               grid-column-end:3;
+               display:grid;
+               grid-template-rows:min-content;
+            }
+        </style>
+    </head>
+    <body class="main-content">
+        <script src="start.js" defer></script>
+        <div class="container" id="container">
+        <img class="article" src style="width:300px;height:400px">
+        </div>
+    </body>
+</html>
+
