@@ -11,11 +11,10 @@
                 border: 3px solid black;
                 border-radius: 0.5rem;
                 font-size: 1rem;
-                flex: 0 1 auto;
                 background-color: white;
                 cursor: pointer;
             }
-            .green{
+            button:focus{
         background-color: hsl(138, 100%, 62%);
             }
             .container{
@@ -28,7 +27,6 @@
                 grid-column-start:3;
                 grid-column-end:4;
                 grid-row-start:1;
-                grid-row-end:5
             }
             .item {
                grid-column-start:2;
@@ -41,7 +39,7 @@
     <body class="main-content">
         <script src="start.js" defer></script>
         <div class="container" id="container">
-        <img class="article" src style="width:300px;height:400px">
+        <img class="article" src style="width:400px;height:600px">
         </div>
     </body>
 </html>
