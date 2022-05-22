@@ -37,15 +37,18 @@ content.forEach(function(Element){
       s1=Element.title;
     }
    // console.log(Element.title.length)
-    design=`<button class="cta-button" id=${Element.previewImage} tabindex="-1">${s1}</button>`;
-    const newArticle=document.createElement("null");
-    newArticle.setAttribute("class","item")
-    newArticle.innerHTML=design;
+    const newArticle=document.createElement("button");
+    newArticle.setAttribute("class","cta-button")
+    newArticle.classList.add("class","item")
+    newArticle.setAttribute("id",Element.previewImage)
+    newArticle.setAttribute("tabIndex","-1")
+    design=`${s1}`
+    newArticle.innerHTML=design
     bdy.append(newArticle);
 })
 
 
-const button=document.querySelectorAll(".cta-button");
+const button=document.querySelectorAll(".item");
 
 const keyCode={
     up:38,
@@ -63,18 +66,6 @@ Element.addEventListener("click", (event) => {
   }, false);})
 
 
-button.forEach(function(Element){
-Element.addEventListener("mouseenter", () => {
-    Element.classList.add("green");
-    //console.log(Element.id);
-}, false);})
-
-button.forEach(function(Element){
-    Element.addEventListener("mouseleave", () => {
-        Element.classList.remove("green");
-        //console.log(Element.id);
-}, false);})
-
 function onkeydown(event)
 {
     switch (event.keyCode) {
@@ -82,7 +73,7 @@ function onkeydown(event)
           event.preventDefault();
           focusNextItem();
           break;
-        case keyCode.LEFT:
+        case keyCode.up:
           event.preventDefault();
           focusPreviousItem();
           break;
@@ -90,27 +81,30 @@ function onkeydown(event)
 }
 
 function focusNextItem() {
-    const item = document.activeElement;
-    console.log(item.nextElementSibling)
-    if (item.nextElementSibling) {
-      activate(item.nextElementSibling);
+    const aele = document.activeElement;
+    if (aele.nextElementSibling) {
+      aele.classList.remove("class","green")
+      activate(aele.nextElementSibling);
     }
 }
 
 function focusPreviousItem() {
-    const item = document.activeElement;
-    if (item.previousElementSibling) {
-      activate(item.previousElementSibling);
+    let aele= document.activeElement;
+    if (aele.previousElementSibling) {
+        aele.classList.remove("class","green")
+      activate(aele.previousElementSibling);
     }
 }
 
 function activate(item) {
     // Set all of the buttons to tabindex -1
-   document.querySelectorAll(".cta-button").forEach((btn) => (btn.tabIndex = -1));
+   document.querySelectorAll(".item").forEach((btn) => (btn.tabIndex = -1));
   
     // Make the current button "active"
     item.tabIndex = 0;
-    item.classList.add("green");
+    item.classList.add("class","green")
+    const shw=document.querySelector("img").setAttribute("src",item.id);
+    item.focus()
 
     
   }
