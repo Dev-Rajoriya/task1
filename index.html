@@ -14,7 +14,7 @@
                 background-color: white;
                 cursor: pointer;
             }
-            button:focus{
+            .green{
         background-color: hsl(138, 100%, 62%);
             }
             .container{
@@ -32,14 +32,17 @@
                grid-column-start:2;
                grid-column-end:3;
                display:grid;
-               grid-template-rows:min-content;
             }
         </style>
     </head>
     <body class="main-content">
         <script src="start.js" defer></script>
         <div class="container" id="container">
-        <img class="article" src style="width:400px;height:600px">
+        <div class="article">
+            <img src style="width:400px;height:600px">
+            <input type="text" value="some text...." style="width:400px"></button>
+            <div class="item"></div>
+        </div>
         </div>
     </body>
 </html>
