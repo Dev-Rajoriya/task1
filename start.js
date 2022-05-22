@@ -37,8 +37,8 @@ content.forEach(function(Element){
       s1=Element.title;
     }
    // console.log(Element.title.length)
-    design=`<button class="cta-button" id=${Element.previewImage}>${s1}</button>`;
-    const newArticle=document.createElement("div");
+    design=`<button class="cta-button" id=${Element.previewImage} tabindex="-1">${s1}</button>`;
+    const newArticle=document.createElement("null");
     newArticle.setAttribute("class","item")
     newArticle.innerHTML=design;
     bdy.append(newArticle);
@@ -46,13 +46,22 @@ content.forEach(function(Element){
 
 
 const button=document.querySelectorAll(".cta-button");
-      
+
+const keyCode={
+    up:38,
+    down:40
+};
+
+const newBdy=document.querySelector(".container");
+
+newBdy.addEventListener("keydown",onkeydown)
+
 button.forEach(function(Element){
 Element.addEventListener("click", (event) => {
     const shw=document.querySelector("img").setAttribute("src",Element.id);
-    
-   // console.log(Element.id);
+    activate(Element)
   }, false);})
+
 
 button.forEach(function(Element){
 Element.addEventListener("mouseenter", () => {
@@ -64,5 +73,49 @@ button.forEach(function(Element){
     Element.addEventListener("mouseleave", () => {
         Element.classList.remove("green");
         //console.log(Element.id);
-    }, false);})
+}, false);})
+
+function onkeydown(event)
+{
+    switch (event.keyCode) {
+        case keyCode.down:
+          event.preventDefault();
+          focusNextItem();
+          break;
+        case keyCode.LEFT:
+          event.preventDefault();
+          focusPreviousItem();
+          break;
+    }
+}
+
+function focusNextItem() {
+    const item = document.activeElement;
+    console.log(item.nextElementSibling)
+    if (item.nextElementSibling) {
+      activate(item.nextElementSibling);
+    }
+}
+
+function focusPreviousItem() {
+    const item = document.activeElement;
+    if (item.previousElementSibling) {
+      activate(item.previousElementSibling);
+    }
+}
+
+function activate(item) {
+    // Set all of the buttons to tabindex -1
+   document.querySelectorAll(".cta-button").forEach((btn) => (btn.tabIndex = -1));
+  
+    // Make the current button "active"
+    item.tabIndex = 0;
+    item.classList.add("green");
+
+    
+  }
+  
+
+
+
   
