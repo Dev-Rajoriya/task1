@@ -65,7 +65,6 @@ Element.addEventListener("click", (event) => {
     activate(Element)
   }, false);})
 
-
 function onkeydown(event)
 {
     switch (event.keyCode) {
@@ -83,27 +82,30 @@ function onkeydown(event)
 function focusNextItem() {
     const aele = document.activeElement;
     if (aele.nextElementSibling) {
-      aele.classList.remove("class","green")
       activate(aele.nextElementSibling);
     }
 }
 
 function focusPreviousItem() {
     let aele= document.activeElement;
-    if (aele.previousElementSibling) {
-        aele.classList.remove("class","green")
+    const shw=document.querySelector("img")
+    if (aele.previousElementSibling&&aele.previousElementSibling!=shw) {
       activate(aele.previousElementSibling);
     }
 }
 
 function activate(item) {
     // Set all of the buttons to tabindex -1
-   document.querySelectorAll(".item").forEach((btn) => (btn.tabIndex = -1));
-  
+    const btn=document.querySelectorAll(".item");
+
+    for(let x in btn)
+    {
+       x.tabIndex=-1
+    }
     // Make the current button "active"
     item.tabIndex = 0;
-    item.classList.add("class","green")
-    const shw=document.querySelector("img").setAttribute("src",item.id);
+    const shw=document.querySelector("img");
+    shw.setAttribute("src",item.id)
     item.focus()
 
     
