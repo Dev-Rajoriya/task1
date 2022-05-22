@@ -21,23 +21,29 @@ const content=[
     }
 ]
 const bdy=document.querySelector(".container");
+console.log(bdy)
 
-content.forEach(function(Element){
-
+function lchk(str){
     let s1;
-    if(Element.title.length>30)
+    if(str.length>30)
     {
-        s1=Element.title.substring(0,5);
-        let s2=Element.title.slice(-20);
+        s1=str.substring(0,15);
+        let s2=str.slice(-15);
         //console.log(s2)
         s1=s1+"..."+s2;
     }
     else
     {
-      s1=Element.title;
+      s1=str;
     }
+   return s1;
+}
+
+content.forEach(function(Element){
+
+    let s1=lchk(Element.title)
    // console.log(Element.title.length)
-    const newArticle=document.createElement("button");
+    let newArticle=document.createElement("button");
     newArticle.setAttribute("class","cta-button")
     newArticle.classList.add("class","item")
     newArticle.setAttribute("id",Element.previewImage)
@@ -46,24 +52,46 @@ content.forEach(function(Element){
     newArticle.innerHTML=design
     bdy.append(newArticle);
 })
+ 
 
-
-const button=document.querySelectorAll(".item");
 
 const keyCode={
     up:38,
     down:40
 };
 
+var prev=undefined; 
+
 const newBdy=document.querySelector(".container");
 
 newBdy.addEventListener("keydown",onkeydown)
 
+const imgTitle=document.querySelector("input")
+
+imgTitle.addEventListener("change",(event)=>{
+   console.log(event.target.value)
+   let str=lchk(event.target.value)
+   event.target.value=str
+   if(prev!=undefined)
+   {
+      prev.innerHTML=str
+      prev.focus()
+   }
+})
+
+
+const button=document.querySelectorAll(".item");
 button.forEach(function(Element){
 Element.addEventListener("click", (event) => {
-    const shw=document.querySelector("img").setAttribute("src",Element.id);
-    activate(Element)
+    console.log(Element.getAttribute("class"))
+    if(Element.getAttribute("class")=="cta-button class item"||Element.getAttribute("class")=="cta-button item")
+    {
+        activate(Element)
+    }
   }, false);})
+
+
+
 
 function onkeydown(event)
 {
@@ -81,15 +109,14 @@ function onkeydown(event)
 
 function focusNextItem() {
     const aele = document.activeElement;
-    if (aele.nextElementSibling) {
+    if (aele.nextElementSibling&&(aele.nextElementSibling.getAttribute("class")=="cta-button class item"||aele.nextElementSibling.getAttribute("class")=="cta-button item")) {
       activate(aele.nextElementSibling);
     }
 }
 
 function focusPreviousItem() {
     let aele= document.activeElement;
-    const shw=document.querySelector("img")
-    if (aele.previousElementSibling&&aele.previousElementSibling!=shw) {
+    if (aele.previousElementSibling&&(aele.previousElementSibling.getAttribute("class")=="cta-button class item"||aele.previousElementSibling.getAttribute("class")=="cta-button item")) {
       activate(aele.previousElementSibling);
     }
 }
@@ -97,18 +124,24 @@ function focusPreviousItem() {
 function activate(item) {
     // Set all of the buttons to tabindex -1
     const btn=document.querySelectorAll(".item");
-
+    console.log(btn)
     for(let x in btn)
     {
        x.tabIndex=-1
     }
     // Make the current button "active"
     item.tabIndex = 0;
+    imgTitle.value=item.innerHTML
     const shw=document.querySelector("img");
     shw.setAttribute("src",item.id)
+    if(prev!=undefined)
+    {
+       prev.classList.remove("class","green")
+       prev.tabIndex=-1;
+    }
+    prev=item
+    item.classList.add("class","green")
     item.focus()
-
-    
   }
   
 
