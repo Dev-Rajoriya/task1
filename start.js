@@ -29,10 +29,10 @@ const bdy=document.querySelector(".container");
 // then return a string which fits in to that
 function lchk(str){
     let s1;
-    if(str.length>30)
+    if(str.length>20)
     {
         s1=str.substring(0,15);
-        let s2=str.slice(-15);
+        let s2=str.slice(-10);
         s1=s1+"..."+s2;
     }
     else
@@ -54,7 +54,7 @@ content.forEach(function(Element){
     newArticle.classList.add("class","item")
     newArticle.setAttribute("id",Element.previewImage)
     newArticle.setAttribute("tabIndex","-1")
-    design=`${s1}`
+    design=`<div class="aligned"><img src="${Element.previewImage}" style="width:50px;height:30px"><span>${s1}</span></div>`
     newArticle.innerHTML=design
     bdy.append(newArticle);
 })
@@ -88,7 +88,7 @@ imgTitle.addEventListener("change",(event)=>{
 
    if(prev!=undefined) // prev can be undefined becuse if we try to edit the image tile before selecting any image
    {
-      prev.innerHTML=str  // here the edited title of image get update in the left bar
+      prev.querySelector("span").innerHTML=str  // here the edited title of image get update in the left bar
 
       prev.focus()  // here the button element retain focus 
    }
@@ -146,15 +146,17 @@ function focusPreviousItem() {
 function activate(item) {
     // Set all of the buttons to tabindex -1
     const btn=document.querySelectorAll(".item");
-    console.log(btn)
+
     for(let x in btn)
     {
        x.tabIndex=-1
     }
     // Make the current button "active"
     item.tabIndex = 0;
-
-    imgTitle.value=item.innerHTML // imgTitle gets updated corresponding to the current active element
+    
+    const y=item.querySelector("span").innerHTML
+    
+    imgTitle.value=y // imgTitle gets updated corresponding to the current active element
 
     const shw=document.querySelector("img");
     shw.setAttribute("src",item.id) // here img get updated corresponding to the current active button
