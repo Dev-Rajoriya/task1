@@ -8,8 +8,6 @@
         <style>
              .cta-button {
                 width:300px;
-                border: 3px solid black;
-                border-radius: 0.5rem;
                 font-size: 1rem;
                 background-color: white;
                 cursor: pointer;
@@ -20,7 +18,7 @@
             .container{
                 display: grid;
                 grid-template-columns:1fr 300px 1fr 1fr;
-                grid-template-rows:repeat(30,30px);
+                grid-template-rows:repeat(30,40px);
                 column-gap:3px;
             }
             .article{
@@ -37,7 +35,7 @@
     </head>
     <body class="main-content">
         <script src="start.js" defer></script>
-        <div class="container" id="container">
+        <div class="container" id="container" style="overflow-x:scroll">
         <div class="article">
             <img src style="width:400px;height:600px">
             <input type="text" value="some text...." style="width:400px"></button>
