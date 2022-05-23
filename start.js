@@ -1,3 +1,5 @@
+
+// all the images and there information
 const content=[
     {
         "previewImage": "https://images.unsplash.com/photo-1561948955-570b270e7c36?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
@@ -20,16 +22,17 @@ const content=[
         "title": "interns-performance-report-may-2022.key"
     }
 ]
-const bdy=document.querySelector(".container");
-console.log(bdy)
 
+const bdy=document.querySelector(".container");
+
+// fucntion to check if the length of the title of the image is more than space allowed
+// then return a string which fits in to that
 function lchk(str){
     let s1;
     if(str.length>30)
     {
         s1=str.substring(0,15);
         let s2=str.slice(-15);
-        //console.log(s2)
         s1=s1+"..."+s2;
     }
     else
@@ -39,10 +42,13 @@ function lchk(str){
    return s1;
 }
 
+
+// fucntion to create a button element for each image 
+// where text is images's title 
+
 content.forEach(function(Element){
 
     let s1=lchk(Element.title)
-   // console.log(Element.title.length)
     let newArticle=document.createElement("button");
     newArticle.setAttribute("class","cta-button")
     newArticle.classList.add("class","item")
@@ -55,42 +61,49 @@ content.forEach(function(Element){
  
 
 
+// key code for up and down arrow key for keyboard navigation
 const keyCode={
     up:38,
     down:40
 };
 
-var prev=undefined; 
+
+var prev=undefined; // it is declared to store the element which is in focus previously
+
 
 const newBdy=document.querySelector(".container");
 
-newBdy.addEventListener("keydown",onkeydown)
+newBdy.addEventListener("keydown",onkeydown) // adding keydown event in the container
 
-const imgTitle=document.querySelector("input")
+const imgTitle=document.querySelector("input") // Title of image which is showing just below the image
 
+
+
+// adding feature to edit the imgTitle
 imgTitle.addEventListener("change",(event)=>{
-   //console.log(event.target.value)
-   let str=lchk(event.target.value)
-   event.target.value=str
-   if(prev!=undefined)
+
+   let str=lchk(event.target.value)  // checking the length of text whether it can fit in the button or not
+
+   event.target.value=str // title of image get updated
+
+   if(prev!=undefined) // prev can be undefined becuse if we try to edit the image tile before selecting any image
    {
-      prev.innerHTML=str
-      prev.focus()
+      prev.innerHTML=str  // here the edited title of image get update in the left bar
+
+      prev.focus()  // here the button element retain focus 
    }
 })
 
 
+// adding on click event in the button
 const button=document.querySelectorAll(".item");
 button.forEach(function(Element){
 Element.addEventListener("click", (event) => {
-    console.log(Element.getAttribute("class"))
-    const classChk=Element.getAttribute("class")
         activate(Element)
   }, false);})
 
 
-
-
+// fucntion to navigate in the bar with the help of arrow keys
 function onkeydown(event)
 {
     switch (event.keyCode) {
@@ -104,20 +117,27 @@ function onkeydown(event)
           break;
     }
 }
-const first="cta-button class item"
+
+// both of the variable stores the possible classes of button element during the whole process 
+const first="cta-button class item" 
 const second="cta-button item"
 
+// this function will help to find the next sibling of the current active element
 function focusNextItem() {
     const aele = document.activeElement;
-   // const classChk=aele.nextElementSibling.getAttribute("class")
     if (aele.nextElementSibling) {
       activate(aele.nextElementSibling);
     }
 }
 
+// this function will help to find the previous sibling of the current active element
 function focusPreviousItem() {
     let aele= document.activeElement;
+
     const classChk=aele.previousElementSibling.getAttribute("class")
+    
+    // (classChk==first||classChk==second) this condition is required to stop the arrow key navigation taking focus to image
+    // because that is previousElementSibling of the first button
     if (aele.previousElementSibling&&(classChk==first||classChk==second)) {
       activate(aele.previousElementSibling);
     }
@@ -133,17 +153,22 @@ function activate(item) {
     }
     // Make the current button "active"
     item.tabIndex = 0;
-    imgTitle.value=item.innerHTML
+
+    imgTitle.value=item.innerHTML // imgTitle gets updated corresponding to the current active element
+
     const shw=document.querySelector("img");
-    shw.setAttribute("src",item.id)
+    shw.setAttribute("src",item.id) // here img get updated corresponding to the current active button
+
     if(prev!=undefined)
     {
-       prev.classList.remove("class","green")
+       prev.classList.remove("class","green")//previously active element loses the green colour as its background colour
        prev.tabIndex=-1;
     }
+
     prev=item
-    item.classList.add("class","green")
-    item.focus()
+
+    item.classList.add("class","green") // the active button changes it background colour
+    item.focus() // this will make the item active
   }
   
 
