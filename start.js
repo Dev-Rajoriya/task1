@@ -1,5 +1,3 @@
-
-// all the images and there information
 const content=[
     {
         "previewImage": "https://images.unsplash.com/photo-1561948955-570b270e7c36?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
@@ -45,7 +43,7 @@ function lchk(str){
 
 // fucntion to create a button element for each image 
 // where text is images's title 
-
+ind=0;
 content.forEach(function(Element){
 
     let s1=lchk(Element.title)
@@ -54,7 +52,8 @@ content.forEach(function(Element){
     newArticle.classList.add("class","item")
     newArticle.setAttribute("id",Element.previewImage)
     newArticle.setAttribute("tabIndex","-1")
-    design=`<div class="aligned"><img src="${Element.previewImage}" style="width:50px;height:30px"><span>${s1}</span></div>`
+    ind++;
+    design=`<div class="aligned" id=${ind}><img src="${Element.previewImage}" style="width:50px;height:30px"><span>${s1}</span></div>`
     newArticle.innerHTML=design
     bdy.append(newArticle);
 })
@@ -94,12 +93,12 @@ imgTitle.addEventListener("change",(event)=>{
    }
 })
 
-
 // adding on click event in the button
 const button=document.querySelectorAll(".item");
 button.forEach(function(Element){
 Element.addEventListener("click", (event) => {
-        activate(Element)
+    console.log(button[0])
+    activate(Element)
   }, false);})
 
 
@@ -118,15 +117,15 @@ function onkeydown(event)
     }
 }
 
-// both of the variable stores the possible classes of button element during the whole process 
-const first="cta-button class item" 
-const second="cta-button item"
-
 // this function will help to find the next sibling of the current active element
 function focusNextItem() {
     const aele = document.activeElement;
     if (aele.nextElementSibling) {
-      activate(aele.nextElementSibling);
+        activate(aele.nextElementSibling);
+      }
+    else if(aele.querySelector("div").id==container.children.length-1)
+    {
+        activate(container.children[1])
     }
 }
 
@@ -134,12 +133,14 @@ function focusNextItem() {
 function focusPreviousItem() {
     let aele= document.activeElement;
 
-    const classChk=aele.previousElementSibling.getAttribute("class")
-    
-    // (classChk==first||classChk==second) this condition is required to stop the arrow key navigation taking focus to image
+    // aele.querySelector("div").id>1 this condition is required to stop the arrow key navigation taking focus to image
     // because that is previousElementSibling of the first button
-    if (aele.previousElementSibling&&(classChk==first||classChk==second)) {
+    if (aele.previousElementSibling&&aele.querySelector("div").id>1) {
       activate(aele.previousElementSibling);
+    }
+    else
+    {
+        activate(container.children[container.children.length-1])
     }
 }
 
@@ -172,8 +173,4 @@ function activate(item) {
     item.classList.add("class","green") // the active button changes it background colour
     item.focus() // this will make the item active
   }
-  
-
-
-
   
