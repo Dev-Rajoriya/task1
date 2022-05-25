@@ -2,6 +2,9 @@
 <!Doctype html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>
             task
         </title>
@@ -11,6 +14,7 @@
                 font-size: 1rem;
                 background-color: white;
                 cursor: pointer;
+                border:0
             }
             .aligned{
                 display:flex;
@@ -29,20 +33,27 @@
                 grid-column-start:3;
                 grid-column-end:4;
                 grid-row-start:1;
+                grid-row-end:11
             }
             .item {
                grid-column-start:2;
                grid-column-end:3;
                display:grid;
             }
+            @media(max-width:768px){
+                .main-content{
+                  flex-direction: column-reverse;
+                  align-items: center;
+                }
+            }           
         </style>
     </head>
     <body class="main-content">
         <script src="start.js" defer></script>
         <div class="container" id="container" style="overflow-x:scroll">
             <div class="article">
-                <img src style="width:400px;height:600px">
-                <input type="text" value="some text...." style="width:400px"></button>
+                <img src id=-1>
+                <input type="text" id=-2 value="some text...." style="width:400px"></button>
             </div>
         </div>
     </body>
