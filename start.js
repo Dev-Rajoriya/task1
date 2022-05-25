@@ -21,10 +21,6 @@ const content=[
     }
 ]
 
-const bdy=document.querySelector(".container");
-
-// fucntion to check if the length of the title of the image is more than space allowed
-// then return a string which fits in to that
 function lchk(str){
     let s1;
     if(str.length>20)
@@ -41,68 +37,51 @@ function lchk(str){
 }
 
 
-// fucntion to create a button element for each image 
-// where text is images's title 
-ind=0;
-content.forEach(function(Element){
-
-    let s1=lchk(Element.title)
-    let newArticle=document.createElement("button");
+ind=0
+bdy=document.querySelector(".image-options")
+content.forEach(element => {
+    s1=lchk(element.title)
+    let newArticle=document.createElement("button")
     newArticle.setAttribute("class","cta-button")
-    newArticle.classList.add("class","item")
-    newArticle.setAttribute("id",Element.previewImage)
-    newArticle.setAttribute("tabIndex","-1")
     ind++;
-    design=`<div class="aligned" id=${ind}><img src="${Element.previewImage}" style="width:50px;height:30px"><span>${s1}</span></div>`
+    newArticle.setAttribute("id",element.previewImage)
+    design=`<div class="aligned" id=${ind}><img src="${element.previewImage}" style="width:100px;height:30px"><span>${s1}</span></div>`
     newArticle.innerHTML=design
-    bdy.append(newArticle);
+    bdy.append(newArticle)
+});
+
+
+const btn=document.querySelectorAll("button")
+
+prev=btn[0]
+
+activate(btn[0])
+
+btn.forEach(element=>{
+    element.addEventListener("click",(event)=>{
+        activate(element)
+    })
+
 })
- 
 
+imgTitle=document.querySelector(".image-display").querySelector("input")
+imgTitle.addEventListener("change",(event)=>{
+    str=lchk(event.target.value)
+    event.target.value=str
+    prev.querySelector("span").innerHTML=str
+    prev.focus()
+})
 
-// key code for up and down arrow key for keyboard navigation
+const newBdy=document.querySelector(".container");
+
+newBdy.addEventListener("keydown",onkeydown)
+
 const keyCode={
     up:38,
     down:40
 };
 
 
-var prev=undefined; // it is declared to store the element which is in focus previously
-
-
-const newBdy=document.querySelector(".container");
-
-newBdy.addEventListener("keydown",onkeydown) // adding keydown event in the container
-
-const imgTitle=document.querySelector("input") // Title of image which is showing just below the image
-
-
-
-// adding feature to edit the imgTitle
-imgTitle.addEventListener("change",(event)=>{
-
-   let str=lchk(event.target.value)  // checking the length of text whether it can fit in the button or not
-
-   event.target.value=str // title of image get updated
-
-   if(prev!=undefined) // prev can be undefined becuse if we try to edit the image tile before selecting any image
-   {
-      prev.querySelector("span").innerHTML=str  // here the edited title of image get update in the left bar
-
-      prev.focus()  // here the button element retain focus 
-   }
-})
-
-// adding on click event in the button
-const button=document.querySelectorAll(".item");
-button.forEach(function(Element){
-Element.addEventListener("click", (event) => {
-    console.log(button[0])
-    activate(Element)
-  }, false);})
-
-
-// fucntion to navigate in the bar with the help of arrow keys
 function onkeydown(event)
 {
     switch (event.keyCode) {
@@ -117,60 +96,46 @@ function onkeydown(event)
     }
 }
 
-// this function will help to find the next sibling of the current active element
-function focusNextItem() {
-    const aele = document.activeElement;
-    if (aele.nextElementSibling) {
-        activate(aele.nextElementSibling);
-      }
-    else if(aele.querySelector("div").id==container.children.length-1)
+function focusNextItem()
+{
+    aele=document.activeElement
+    console.log(aele.hasAttribute("alt"))
+    if(!aele.hasAttribute("alt"))
     {
-        activate(container.children[1])
+        if (aele.nextElementSibling) {
+            activate(aele.nextElementSibling);
+        }
+        else
+        {
+            activate(btn[0])
+        }
     }
 }
 
-// this function will help to find the previous sibling of the current active element
-function focusPreviousItem() {
-    let aele= document.activeElement;
-
-    // aele.querySelector("div").id>1 this condition is required to stop the arrow key navigation taking focus to image
-    // because that is previousElementSibling of the first button
-    if (aele.previousElementSibling&&aele.querySelector("div").id>1) {
-      activate(aele.previousElementSibling);
-    }
-    else
+function focusPreviousItem()
+{
+    aele=document.activeElement
+    console.log(aele.hasAttribute("alt"))
+    if(!aele.hasAttribute("alt"))
     {
-        activate(container.children[container.children.length-1])
+        if (aele.previousElementSibling) {
+            activate(aele.previousElementSibling);
+        }
+        else
+        {
+            activate(btn[btn.length-1])
+        }
     }
 }
 
-function activate(item) {
-    // Set all of the buttons to tabindex -1
-    const btn=document.querySelectorAll(".item");
-
-    for(let x in btn)
-    {
-       x.tabIndex=-1
-    }
-    // Make the current button "active"
-    item.tabIndex = 0;
-    
-    const y=item.querySelector("span").innerHTML
-    
-    imgTitle.value=y // imgTitle gets updated corresponding to the current active element
-
-    const shw=document.querySelector("img");
-    shw.setAttribute("src",item.id) // here img get updated corresponding to the current active button
-
-    if(prev!=undefined)
-    {
-       prev.classList.remove("class","green")//previously active element loses the green colour as its background colour
-       prev.tabIndex=-1;
-    }
-
+function activate(item)
+{
+    const shw=document.querySelector(".image-display").querySelector("img")
+    shw.setAttribute("src",item.id)
+    prev.classList.remove("class","green")
+    item.classList.add("class","green")
+    changeTitle=document.querySelector(".image-display").querySelector("input")
+    changeTitle.value=item.querySelector("span").innerHTML
     prev=item
-
-    item.classList.add("class","green") // the active button changes it background colour
-    item.focus() // this will make the item active
-  }
-  
+    item.focus()
+}
