@@ -1,60 +1,20 @@
-   
-<!Doctype html>
+<!DOCTYPE html>
+
 <html>
     <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>
-            task
+            MY
         </title>
-        <style>
-            .cta-button {
-                width:300px;
-                font-size: 1rem;
-                background-color: white;
-                cursor: pointer;
-                border:0
-            }
-            .aligned{
-                display:flex;
-                align-items:center
-            }
-            .green{
-        background-color: hsl(138, 100%, 62%);
-            }
-            .container{
-                display: grid;
-                grid-template-columns:1fr 300px 1fr 1fr;
-                grid-template-rows:repeat(30,40px);
-                column-gap:3px;
-            }
-            .article{
-                grid-column-start:3;
-                grid-column-end:4;
-                grid-row-start:1;
-                grid-row-end:11
-            }
-            .item {
-               grid-column-start:2;
-               grid-column-end:3;
-               display:grid;
-            }
-            @media(max-width:768px){
-                .main-content{
-                  flex-direction: column-reverse;
-                  align-items: center;
-                }
-            }           
-        </style>
+        <link rel="stylesheet" href="style.css">
     </head>
-    <body class="main-content">
-        <script src="start.js" defer></script>
-        <div class="container" id="container" style="overflow-x:scroll">
-            <div class="article">
-                <img src id=-1>
-                <input type="text" id=-2 value="some text...." style="width:400px"></button>
+    <body>
+        <div class="container">
+            <div class="image-options"></div>
+            <div class="image-display">
+                <img src alt="-1" style="height:500px">
+                <input type="text" alt="-2" value="some text...">
             </div>
         </div>
+        <script src="start.js" defer></script>
     </body>
 </html>
